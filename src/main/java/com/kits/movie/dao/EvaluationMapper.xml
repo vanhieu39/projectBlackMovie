@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.kits.movie.dao.EvaluationMapper">
+  	<resultMap type="evaluation" id="result">
+  			<id property="id_evaluation" column="id_evaluation"/>
+  			<result property="id_film" column="id_film"/>
+  			<result property="rate" column="rate"/>
+  			<result property="sum_eveluation" column="sum_eveluation"/>  			
+  	</resultMap>
+  	<select id="getAllEvaluation" resultType="evaluation" resultMap="result">
+  		select * from evaluation
+  	</select>
+  </mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<resultMap type="movie" id="result">
+  		<id property="id_film" column="id_film" />
+  		<result property="name_film" column="name_film" />
+  		<result property="status" column="status" />
+  		<result property="list_author" column="list_author" />
+  		<result property="list_actor" column="list_actor" />		
+  		<result property="nation" column="nation" />
+  		<result property="open_date" column="open_date" />
+  		<result property="time" column="time" />
+  		<result property="quality" column="quality" />
+  		<result property="num_view" column="num_view"  />
+  		<result property="description" column="description" />
+  		<result property="keyword" column="keyword" />
+  		<result property="image" column="image" />
+  		<result property="link_film" column="link_film"  />
+  		<result property="link_trailer" column="link_trailer" />
+  		<result property="category" column="category" />
+  		<result property="new_film" column="new_film" />
+  		<result property="is_series" column="is_series" />
+  		<result property="year" column="YEAR(open_date)" /> 
+  	</resultMap> 

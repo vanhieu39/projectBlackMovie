@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+<configuration>
+ <typeAliases>
+ 	<typeAlias type="com.kits.movie.entity.User" alias="user"/>
+ 	<typeAlias type="com.kits.movie.entity.Systemlog" alias="systemlog"/>
+ 	<typeAlias type="com.kits.movie.entity.Movie" alias="movie"/>
+ 	<typeAlias type="com.kits.movie.entity.Serial" alias="serial"/>
+ 	<typeAlias type="com.kits.movie.entity.Country" alias="country"/>
+ 	<typeAlias type="com.kits.movie.entity.Genre" alias="genre"/>
+ 	<typeAlias type="com.kits.movie.entity.Keyword" alias="keyword"/>
+ 	<typeAlias type="com.kits.movie.entity.Actor" alias="actor"/>
+ 	<typeAlias type="com.kits.movie.entity.Directors" alias="directors"/>
+ 	<!-- <typeAlias type="com.kits.movie.entity.dto" alias="directors"/> -->
+ 	
+ </typeAliases>
+  	<environments default="development">
+  		<environment id="development">
+  			<transactionManager type="JDBC" />
+  			<dataSource type="POOLED">
+  				<property name="driver" value="com.mysql.jdbc.Driver"/>
+  				<property name="url" value="jdbc:mysql://192.168.123.157/black_movie?characterEncoding=UTF-8"/>
+  				<property name="username" value="root"/>
+  				<property name="password" value="123"/>
+  			</dataSource>
+  		</environment>
+  	</environments>	
+  	<mappers>
+   		<mapper resource="com/kits/movie/dao/UserMapper.xml" />
+   		<mapper resource="com/kits/movie/dao/SystemlogMapper.xml" /> 
+  		<mapper resource="com/kits/movie/dao/MovieMapper.xml" />
+  		<mapper resource="com/kits/movie/dao/SerialMapper.xml" />
+  		<mapper resource="com/kits/movie/dao/CountryMapper.xml" />
+  		<mapper resource="com/kits/movie/dao/GenreMapper.xml" />
+  		<mapper resource="com/kits/movie/dao/KeywordMapper.xml" />
+  		<mapper resource="com/kits/movie/dao/ActorMapper.xml" />
+  		<mapper resource="com/kits/movie/dao/DirectorsMapper.xml" />
+  		<!-- <mapper resource="com/kits/movie/dao/SerialMoviesMapper.xml" /> -->
+  	</mappers>
+  </configuration>
+  

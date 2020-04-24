@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kits.movie.dao.KeywordMapper">
+	
+	<resultMap type="keyword" id="result">
+		<id property="keyword_id" column="keyword_id" />
+		<result property="keyword_name" column="keyword_name" />		
+	</resultMap>
+	
+	<select id="getKeywords" resultType="keyword" resultMap="result">
+  		SELECT * FROM keyword limit 0, 25
+  	</select>  	
+  	
+  	<!-- Section 4 movies - keyword ID -->
+  	<select id="getKeywordMovies" resultType="keyword" resultMap="result">
+		SELECT DISTINCT movie.* FROM movie JOIN serial_movies ON movie.id_film = serial_movies.movie_id
+ 		 JOIN series ON series.id = serial_movies.id WHERE movie.num_view > 5000 limit 0 , 7
+	</select>  
+
+</mapper>

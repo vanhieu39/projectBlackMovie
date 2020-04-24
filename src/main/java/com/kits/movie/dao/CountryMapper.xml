@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.kits.movie.dao.CountryMapper">
+  	<resultMap type="country" id="result">
+  		<id property="country_id" column="country_id" />
+  		<result property="country_name" column="country_name" />
+  		<result property="is_active" column="is_active" />
+  		<result property="last_updated" column="last_updated" />  		
+ 		
+  	</resultMap> 
+  		
+  	<select id="getAllcountries" resultType="country" resultMap="result">
+  		select * from country
+  	</select>
+  	
+  	<select id="getAllcountriesPage" resultType="country" resultMap="result">
+  		select * from country limit #{start} , 10
+  	</select>
+  	
+  	<select id="countriesActive" resultType="country" resultMap="result">
+  		select * from country WHERE is_active = 1 limit 0 , 12
+  	</select>
+  	
+  	<select id="getCountryByMovieId" resultType="country" resultMap="result" parameterType="int">
+  		select country.* from country JOIN country_movies ON country.country_id = country_movies.country_id WHERE country_movies.movie_id = #{movieId}
+  	</select>
+ 	
+ </mapper>

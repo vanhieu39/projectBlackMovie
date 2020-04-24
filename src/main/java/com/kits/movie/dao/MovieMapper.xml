@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.kits.movie.dao.MovieMapper">
+  	<resultMap type="movie" id="result">
+  		<id property="id_film" column="id_film" />
+  		<result property="name_film" column="name_film" />
+  		<result property="status" column="status" />
+  		<result property="list_author" column="list_author" />
+  		<result property="list_actor" column="list_actor" />		
+  		<result property="nation" column="nation" />
+  		<result property="open_date" column="open_date" />
+  		<result property="time" column="time" />
+  		<result property="quality" column="quality" />
+  		<result property="num_view" column="num_view"  />
+  		<result property="description" column="description" />
+  		<result property="keyword" column="keyword" />
+  		<result property="image" column="image" />
+  		<result property="link_film" column="link_film"  />
+  		<result property="link_trailer" column="link_trailer" />
+  		<result property="category" column="category" />
+  		<result property="new_film" column="new_film" />
+  		<result property="is_series" column="is_series" />
+  		<result property="year" column="YEAR(open_date)" /> 
+  	</resultMap> 
+  	
+  	
+  	 <!--getMoviesSuggest4 Size -->
+  	<select id="getMoviesSuggest4" resultType="movie" resultMap="result" parameterType="int">
+  		SELECT DISTINCT movie.* FROM movie JOIN movie_genres ON movie.id_film = movie_genres.movie_id 
+ 		 JOIN genre ON  genre.genre_id = movie_genres.genre_id WHERE movie_genres.genre_id = #{fkCategory} limit 0 , 4; 	 
+	</select>
+  	
+  	 <!-- Paginated Cinemax New 20 Size -->
+  	<select id="getMoviesCinemax" resultType="movie" resultMap="result" parameterType="int">
+		SELECT * FROM movie WHERE status = 'cinemax' AND is_series = 0 ORDER BY open_date limit #{start} , 20; 
+	</select>
+  	
+    <!-- Paginated All Short New 20 Size -->
+  	<select id="getMoviesNewShort" resultType="movie" resultMap="result" parameterType="int">
+		SELECT * FROM movie WHERE is_series = 0 AND new_film = 1 ORDER BY open_date limit #{start} , 20; 
+	</select>
+	
+	<!-- MoviesAll All Admin Manager-->
+	<select id="getMoviesAdminAll" resultType="movie" resultMap="result" >
+		SELECT * FROM movie ORDER BY open_date; 
+	</select>
+	
+  	<!-- MoviesAll Short Admin Manager Page-->
+	<select id="getMoviesAdminShort" resultType="movie" resultMap="result" parameterType="int">
+		SELECT * FROM movie WHERE is_series = 0 ORDER BY open_date DESC limit #{start} , 10; 
+	</select>
+	
+	<!-- MoviesAll Short Admin Manager-->
+	<select id="getMoviesAdminShortCountSize" resultType="movie" resultMap="result">
+		SELECT * FROM movie WHERE is_series = 0 ORDER BY open_date  
+	</select>
+	
+	<!-- MoviesAll Series Admin Manager Page-->
+	<select id="getMoviesAdminSeries" resultType="movie" resultMap="result" parameterType="int">
+		SELECT * FROM movie WHERE is_series = 1 Order by open_date DESC limit #{start} , 10; 
+	</select>		
+	
+	<!-- Paginated All Row Series All Count-->
+	<select id="getCountSeries" resultType="movie" resultMap="result">
+		SELECT * FROM movie WHERE is_series = 1
+	</select>
+  	
+  	<!-- Paginated All 20 Size -->
+  	<select id="getMoviesAll" resultType="movie" resultMap="result" parameterType="int">
+		SELECT * FROM movie Order by open_date DESC limit #{start} , 20
+	</select>
+	
+	<!-- SlideShow 8 Short Movie-->
+	<select id="getMoviesSlideShow8" resultType="movie" resultMap="result">
+		SELECT * FROM movie WHERE is_series = 0 AND num_view > 5000 limit 0 , 8 
+	</select>
+	
+	<!-- Section 1 ======= 8 cinemax Short Movie -->	
+	<select id="getMoviesShort8" resultType="movie" resultMap="result">
+		SELECT * FROM movie WHERE status = 'cinemax' limit 0 , 8
+	</select>
+	
+	<!-- Section 2 Short 12-->
+	<select id="getMoviesShort12" resultType="movie" resultMap="result">
+		SELECT * FROM movie WHERE is_series = 0 AND new_film = 1 ORDER BY open_date limit 0 , 12;
+	</select>	
+	
+	<!-- Section 2 TRAILER 8-->	
+	<select id="getMoviesTrailer8" resultType="movie" resultMap="result">
+		select * from movie limit 0 , 8
+	</select>
+
+	<!-- Section 2 View SHORT 7-->
+	<select id="getMoviesViewShort7" resultType="movie" resultMap="result">
+		SELECT * FROM movie WHERE is_series = 0 AND num_view > 1000 AND is_series = 0 limit 0 , 7
+	</select>
+	
+	<!-- Navbar Search Name-->
+	<select id="getMoviesName" parameterType="String" resultMap="result">
+		SELECT * FROM movie WHERE name_film LIKE #{name} 
+	</select> 
+	<!-- Navbar Dropdown Year-->
+	<select id="getMoviesYear" resultMap="result" parameterType="int">
+		SELECT * FROM movie WHERE YEAR(open_date) = #{year} AND is_series = 0
+	</select>
+	
+	<!-- Section 3 JOIN to Details Page-->
+	<select id="getMoviesBySerialId" resultType="movie" resultMap="result" parameterType="int">
+		SELECT DISTINCT movie.*, series.name as name FROM movie JOIN serial_movies ON movie.id_film = serial_movies.movie_id
+ 		 JOIN series ON series.id = serial_movies.id WHERE series.id = #{serial_id}
+	</select>
+	
+	<!-- Navbar Dropdown Country-->
+	<select id="getMoviesByCountryId" resultMap="result" parameterType="int">
+		SELECT DISTINCT movie.* FROM movie JOIN country_movies ON movie.id_film = country_movies.movie_id
+ 		 JOIN country ON country.country_id = country_movies.country_id WHERE country_movies.country_id = #{countryId} 		
+	</select>
+	
+	<!-- Navbar Dropdown Category-->
+	<select id="getMoviesfkCategory" resultMap="result" parameterType="int">
+		SELECT DISTINCT movie.* FROM movie JOIN movie_genres ON movie.id_film = movie_genres.movie_id
+ 		 JOIN genre ON  genre.genre_id = movie_genres.genre_id WHERE movie_genres.genre_id = #{categoryId} 		
+	</select>
+	
+	<!-- End Setion 4 Keyword-->
+	<select id="getMoviesfkKeyword" resultMap="result" parameterType="int">
+		SELECT DISTINCT movie.* FROM movie JOIN movie_keywords ON movie.id_film = movie_keywords.movie_id
+ 		 JOIN keyword ON keyword.keyword_id = movie_keywords.keyword_id WHERE movie_keywords.keyword_id = #{keywordId} 	 	
+	</select>
+  	
+  	<!-- CRUD ADMIN-->
+   <insert id="insertMovie" parameterType="movie" keyProperty="id" useGeneratedKeys="true">
+  		insert into movie(name_film, status, nation, open_date, time, quality, num_view, description, keyword, image, image_detail1, image_detail2 ,link_film, link_trailer, category , new_film, is_series )
+  		values(#{name_film},#{status}, #{nation},#{open_date},#{time},#{quality},#{num_view},#{description},#{keyword},#{image}, #{image_detail1}, #{image_detail2} ,#{link_film} ,#{link_trailer}, #{category} , #{new_film} , #{is_series})
+  	</insert>
+  	
+  	<update id="updateMovie" parameterType="movie">
+		UPDATE movie SET name_film = #{name_film}, list_author = #{list_author}, list_actor = #{list_actor}, nation = #{nation}, open_date = #{open_date}, time = #{time} , quality= #{quality} ,
+		num_view = #{num_view}, description = #{description}, keyword = #{keyword}, image = #{image}, link_film = #{link_film} , link_trailer= #{link_trailer}, category = #{category}, new_film = #{new_film}
+		, serial_id = #{serial_id} WHERE id_film = #{movie_id} 
+	</update>
+	
+  	<delete id="deleteMovie" parameterType="int">
+  		delete from movie where id_film = #{movieId}
+  	</delete>
+  	
+  	<select id="findMovieById" parameterType="int" resultType="movie" resultMap="result">
+		SELECT * FROM movie WHERE id_film = #{movieId}
+	</select>
+  	
+  		<!-- Section 3 Series Click Search-->
+	<select id="getMoviesFKSeries" resultMap="result" parameterType="int">
+		SELECT * FROM movie Order by open_date DESC WHERE is_series =  #{fk} LIMIT  0 , 12
+	</select>
+	
+	<!-- Count All Movie Hải Code-->
+	<select id="countMovie" resultType="int" >
+		SELECT COUNT(*) FROM movie; 
+	</select>
+  </mapper>

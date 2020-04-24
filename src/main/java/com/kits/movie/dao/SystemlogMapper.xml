@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.kits.movie.dao.SystemlogMapper">
+  	<resultMap type="systemlog" id="result">
+  		<id property="id_log" column="id_log" />
+  		<result property="id_user" column="id_user" />
+  		<result property="action" column="action" />
+  		<result property="execute_table" column="execute_table" />
+  		<result property="sqlcomment" column="sqlcomment" />
+  		<result property="execute_time" column="execute_time" />
+  		<result property="execute_date" column="execute_date" />
+  	</resultMap> 
+  		
+  	<select id="getAllLogPage" resultType="systemlog" resultMap="result" parameterType="int">
+  		SELECT a.*, b.username FROM systemlog a, user b WHERE hide = 'no' AND a.id_user = b.id_user ORDER BY id_log DESC LIMIT #{start} , 50;
+  	</select>
+  	<select id="getAllLog" resultType="systemlog" resultMap="result">
+  		SELECT id_log FROM systemlog WHERE hide = 'no';
+  	</select>
+  	
+  	<insert id="insertLog" parameterType="systemlog" keyProperty="id" useGeneratedKeys="true">
+  		INSERT INTO systemlog (id_user, action, execute_table, sqlcomment, execute_time, execute_date) 
+  		VALUES (#{id_user}, #{action}, #{execute_table}, #{sqlcomment}, #{execute_time}, #{execute_date});
+  	</insert>
+  	
+  	<delete id="deleteLog" parameterType="int">
+  		DELETE FROM `black_movie`.`systemlog` WHERE  `id_log`= #{id_log};
+  	</delete>
+  	
+  	<delete id="deleteAllLog" >
+  		DELETE FROM `black_movie`.`systemlog` WHERE 1=1;
+  	</delete>
+  	<update id="hideAllLog">
+  		UPDATE systemlog SET hide = 'yes' WHERE hide = 'no';
+  	</update>
+  	<!-- Count All Movie Hải Code-->
+	<select id="countLog" resultType="int" >
+		SELECT COUNT(*) FROM systemlog WHERE hide = 'no'; 
+	</select>
+	<!--   	thống kê top 3 user hoạt động nhiều nhất -->
+  	<select id="getTop3ActivityTotal" resultType="int">
+	  	SELECT b.total FROM user a, (select id_user,count(*) total FROM systemlog GROUP BY id_user ORDER BY total DESC LIMIT 3) b 
+		WHERE a.id_user = b.id_user ORDER BY b.total DESC LIMIT 3;
+  	</select>
+  </mapper>

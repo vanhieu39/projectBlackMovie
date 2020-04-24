@@ -1,0 +1,53 @@
+.hidden-class {
+    display: none;
+}
+
+.button-add {
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+img {
+	width: 150px;
+	height: auto;
+}
+
+.card-body {
+	overflow-x: scroll;	
+}
+
+th.description {
+	padding-left: 400px;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    width: 370px;
+    white-space: nowrap;
+}
+
+#dtHorizontalExample, #dtHorizontalExample tr, #dtHorizontalExample tr th, #dtHorizontalExample tr td {
+  border: 2px solid black;
+}
+
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  overflow: scroll;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}

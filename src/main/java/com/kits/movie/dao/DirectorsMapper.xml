@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.kits.movie.dao.DirectorsMapper">
+ 	<resultMap type="directors" id="result">
+ 		<id property="id" column="id"/>
+ 		<result property="fullname" column="fullname"/>
+ 		<result property="gender" column="gender"/>
+ 		<result property="birthday" column="birthday"/>
+ 		<result property="nation" column="nation"/>
+ 		<result property="images" column="images"/>
+ 		<result property="view" column="view"/>
+ 	</resultMap>
+ 	
+ 	<select id="getAllDirectorsPage" resultType="directors" resultMap="result" parameterType="int">
+ 		SELECT * FROM directors ORDER BY id DESC LIMIT #{start} , 20;
+ 	</select>
+ 	<select id="getAllDirectors" resultType="directors" resultMap="result">
+ 		select id from directors;
+ 	</select>
+ 	<insert id="insertDirector" parameterType="directors" keyProperty="id" useGeneratedKeys="true">
+  		INSERT INTO directors (fullname, gender, birthday, nation, images, view) VALUES (#{fullname}, #{gender}, #{birthday}, #{nation}, #{images}, #{view});
+  	</insert>
+  	<select id="findDirectorById" parameterType="int" resultType="directors" resultMap="result">
+  		select * from directors where id = #{id};
+  	</select>
+  	<update id="updateDirectors" parameterType="directors">
+  		UPDATE directors SET fullname=#{fullname}, gender=#{gender}, birthday=#{birthday}, nation=#{nation}, images=#{images}, view=#{view} WHERE  id = #{id};
+  	</update>
+  	<delete id="deleteDirector" parameterType="int">
+  		delete from directors where id = #{id};
+  	</delete>
+  	<!-- Count All Director Hải Code-->
+	<select id="countDirectors" resultType="int" >
+		SELECT COUNT(*) FROM directors; 
+	</select>
+  	<!-- Count All Women Director Hải Code-->
+	<select id="countWomenDirectors" resultType="int" >
+		SELECT COUNT(*) FROM directors WHERE gender = 0; 
+	</select>
+ </mapper>

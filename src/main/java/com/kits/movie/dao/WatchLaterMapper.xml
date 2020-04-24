@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.kits.movie.dao.WatchLaterMapper">
+ 	<resultMap type="watchlater" id="result">
+ 		<id property="id_watchlater" column="id_watchlater"/>
+ 		<result property="id_film" column="id_film"/>
+ 		<result property="id_user" column="id_user"/>
+ 		<result property="fb_id" column="fb_id"/>
+ 		<result property="date_save" column="date_save"/>
+ 	</resultMap>
+ 	<select id="getAllWatchLater" resultType="watchlate" resultMap="result">
+ 		select * from watch_later
+ 	</select>
+ </mapper>

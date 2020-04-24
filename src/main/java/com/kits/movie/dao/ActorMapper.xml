@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.kits.movie.dao.ActorMapper">
+ 	<resultMap type="actor" id="result">
+ 		<id property="id_actor" column="id_actor"/>
+ 		<result property="fullname" column="fullname"/>
+ 		<result property="gender" column="gender"/>
+ 		<result property="birthday" column="birthday"/>
+ 		<result property="nation" column="nation"/>
+ 		<result property="images" column="images"/>
+ 		<result property="view" column="view"/>
+ 	</resultMap>
+ 	
+ 	 <!-- Paginated Actor New 20 Size -->
+  	<select id="getAllActorPage" resultType="actor" resultMap="result" parameterType="int">
+		SELECT * FROM actor ORDER BY id_actor DESC LIMIT #{start} , 20;
+	</select>
+ 	<select id="getAllActor" resultType="actor" resultMap="result">
+ 		select id_actor, fullname , images  from actor;
+ 	</select>
+ 	<insert id="insertActor" parameterType="actor" keyProperty="id_actor" useGeneratedKeys="true">
+  		INSERT INTO actor (fullname, gender, birthday, nation, images, view) VALUES (#{fullname}, #{gender}, #{birthday}, #{nation}, #{images}, #{view});
+  	</insert>
+  	<select id="findActorById" parameterType="int" resultType="actor" resultMap="result">
+  		select * from actor where id_actor = #{actorID};
+  	</select>
+  	<update id="updateActor" parameterType="actor">
+  		UPDATE actor SET fullname=#{fullname}, gender=#{gender}, birthday=#{birthday}, nation=#{nation}, images=#{images}, view=#{view} WHERE  id_actor=#{id_actor};
+  	</update>
+  	<delete id="deleteActor" parameterType="int">
+  		delete from actor where id_actor = #{actorID};
+  	</delete>	 	
+ 	<!-- Actor show inside Movies -->
+  	<select id="getActorByMovieId" resultType="actor" resultMap="result">
+ 		select actor.* from actor JOIN movie_actors ON actor.id_actor = movie_actors.id_actor WHERE movie_actors.id_film = #{movieId}
+ 	</select>
+ 	<!-- Count All Actor Hải Code-->
+	<select id="countActor" resultType="int" >
+		SELECT COUNT(*) FROM actor; 
+	</select>
+	<!-- Count Women Actor Hải Code-->
+	<select id="countWomenActor" resultType="int" >
+		SELECT COUNT(*) FROM actor WHERE gender = 0; 
+	</select>
+ </mapper>
